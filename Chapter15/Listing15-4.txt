@@ -1,0 +1,17 @@
+
+      private void ConnInfoMessage(object sender, SqlInfoMessageEventArgs ev)
+      {
+         foreach (SqlError err in ev.Errors)
+         {
+            listBox1.Items.Add("------------------------------");
+            listBox1.Items.Add("Entering InfoMessage Event Handler");
+            listBox1.Items.Add("Source- " + err.Source);
+            listBox1.Items.Add("State- " + err.State);
+            listBox1.Items.Add("Number- " + err.Number);
+            listBox1.Items.Add("Procedure- " + err.Procedure);
+            listBox1.Items.Add("Server- " + err.Server);
+            listBox1.Items.Add("Message- " + err.Message);
+            listBox1.Items.Add("Exiting InfoMessage Event Handler");
+            listBox1.Items.Add("------------------------------");
+         }
+      }

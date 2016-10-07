@@ -1,0 +1,22 @@
+         string connString = @"
+            server = .\sqlexpress;
+            integrated security = true;
+            database = northwind
+         ";
+
+         string sql = @"
+            select
+                *
+         from
+            employees
+         ";
+
+         SqlConnection conn = new SqlConnection(connString);
+         SqlDataAdapter da = new SqlDataAdapter(sql, conn);
+         DataSet ds = new DataSet();
+         da.Fill(ds, "employees");
+
+         // Bind to FirstName column of the Employees table
+         textBox1.DataBindings.Add("text", ds, "employees.firstname");
+         // Bind to LastName column of the Employees table
+         textBox2.DataBindings.Add("text", ds, "employees.lastname");

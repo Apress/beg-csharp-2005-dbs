@@ -1,0 +1,20 @@
+         string connString = @"
+            server = (local)\netsdk;
+            integrated security = sspi;
+            database = northwind
+";
+
+string sql = @"
+   select
+      *
+   from
+      customers
+";
+
+SqlConnection conn = new SqlConnection(connString);
+SqlDataAdapter da = new SqlDataAdapter(sql, conn);
+DataSet ds = new DataSet();
+da.Fill(ds, "customers");
+
+// Bind the data table to the data grid
+dataGrid1.SetDataBinding(ds, "customers");

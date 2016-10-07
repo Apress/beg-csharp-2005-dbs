@@ -1,0 +1,23 @@
+         string connString = @"
+            server = .\sqlexpress;
+            integrated security = true;
+            database = northwind
+         ";
+
+         string sql = @"
+            select
+               *
+            from
+               employees
+         ";
+
+         SqlConnection conn = new SqlConnection(connString);
+         SqlDataAdapter da = new SqlDataAdapter(sql, conn);
+         da.Fill(dataSet1, "employees");
+
+         // Bind text boxes to data columns
+         textBox1.DataBindings.Add("text", dataSet1, "employees.firstname");
+         textBox2.DataBindings.Add("text", dataSet1, "employees.lastname");
+
+         // Create the binding manager (CurrencyManager)
+         bMgr = this.BindingContext[dataSet1, "employees"];

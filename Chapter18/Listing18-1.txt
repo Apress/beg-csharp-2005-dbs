@@ -1,0 +1,58 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Query;
+using System.Xml.XLinq;
+using System.Data.DLinq;
+
+namespace Chapter18
+{
+   [Table]
+   public class Customers
+   {
+      [Column(Id=true)]
+      public string customerId;
+      [Column]
+      public string companyName;
+      [Column]
+      public string city;
+      [Column]
+      public string country;
+   }
+
+   class LinqToSql
+   {
+      static void Main(string[] args)
+      {
+         // connection string
+         string connString = @"
+            server = .\sqlexpress;
+            integrated security = true;
+            database = northwind
+         ";
+
+         // create data context 
+         DataContext db = new DataContext(connString);
+
+         // create typed table 
+         Table<Customers> customers = db.GetTable<Customers>();
+
+         // query database
+         var custs =
+            from c in customers
+            select
+               c
+         ;
+
+         // display customers
+         foreach (var c  in custs)
+            Console.WriteLine(
+               "{0} {1} {2} {3}",
+               c.customerId,
+               c.companyName,
+               c.city,
+               c.country
+            );
+      }
+   }
+}

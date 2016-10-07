@@ -1,0 +1,57 @@
+         // clear list box
+         listBox1.Items.Clear();
+
+         // create connection
+         SqlConnection conn = new SqlConnection(@"
+            data source = .\sqlexpress;
+            integrated security = true;
+            database = northwind
+         ");
+
+         try
+         {
+            // open connection
+            conn.Open();
+
+            // create data adapter
+            SqlDataAdapter da = new SqlDataAdapter(
+               @"
+               select
+                  *
+               from
+                  Customers
+               ",
+               conn
+            );
+
+            // build command
+            SqlCommandBuilder cb = new SqlCommandBuilder(da);
+  
+            // create and fill dataset (select only first row)
+            DataSet ds = new DataSet();
+            da.Fill(ds, 0, 1, "Customers");
+
+            // add handlers
+            da.RowUpdating += new SqlRowUpdatingEventHandler(OnRowUpdating);
+            da.RowUpdated += new SqlRowUpdatedEventHandler(OnRowUpdated); 
+
+            // modify dataset
+            DataTable dt = ds.Tables["Customers"];
+            dt.Rows[0][1] = "The Volcano Corporation";
+
+            // update - this operation fires two events (RowUpdating/RowUpdated)
+            da.Update(ds, "Customers");
+
+            // remove handlers
+            da.RowUpdating -= new SqlRowUpdatingEventHandler(OnRowUpdating);
+            da.RowUpdated -= new SqlRowUpdatedEventHandler(OnRowUpdated);
+         }
+         catch (SqlException ex) 
+         {
+            MessageBox.Show(ex.Message);
+         }
+         finally
+         {
+            // close connection
+            conn.Close();
+         }

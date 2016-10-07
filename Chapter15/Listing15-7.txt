@@ -1,0 +1,5 @@
+
+      private void OnRowUpdated(object sender, SqlRowUpdatedEventArgs e)
+      {
+         DisplayEventArgs(e);
+      }

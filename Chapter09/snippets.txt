@@ -1,0 +1,70 @@
+using System.Data.SqlClient;
+
+
+
+
+
+string connString = @"
+   server = .\sqlexpress;
+   integrated security = true;
+   database = northwind
+";
+
+string sql = @"
+   select
+      *
+   from
+      employees
+";
+
+SqlConnection conn = new SqlConnection(connString);
+SqlDataAdapter da = new SqlDataAdapter(sql, conn);
+DataSet ds = new DataSet();
+da.Fill(ds, "employees");
+
+// Bind to FirstName column of the Employees table
+textBox1.DataBindings.Add("text", ds, "employees.firstname");
+// Bind to LastName column of the Employees table
+textBox2.DataBindings.Add("text", ds, "employees.lastname");
+
+
+
+
+
+         Binding newBind = new Binding("text", ds, "employees.firstname");
+         textBox1.DataBindings.Add(newBind);
+
+
+
+
+
+using System.Data.SqlClient;
+
+
+
+
+// Declare a binding manager field
+private BindingManagerBase bMgr;
+
+
+
+
+// Point to the next row and refresh the contents of the text box
+bMgr.Position += 1;
+
+
+
+
+
+// Point to the previous row and refresh contents of the text box
+bMgr.Position -= 1;
+
+
+
+
+
+
+
+
+
+

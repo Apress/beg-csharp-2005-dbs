@@ -1,0 +1,12 @@
+      private void DisplayEventArgs(SqlRowUpdatingEventArgs args)
+      {
+         listBox1.Items.Add("OnRowUpdating event");
+         if (args.Status != UpdateStatus.Continue)
+            listBox1.Items.Add("RowStatus = " + args.Status.ToString());
+      }
+
+      private void DisplayEventArgs(SqlRowUpdatedEventArgs args)
+      {   
+         listBox1.Items.Add("OnRowUpdated event");
+         listBox1.Items.Add("Records Affected = " + args.RecordsAffected);
+      } 

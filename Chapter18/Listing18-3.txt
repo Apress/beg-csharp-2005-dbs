@@ -1,0 +1,57 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Query;
+using System.Xml.XLinq;
+using System.Data.DLinq;
+using System.Data;
+using System.Data.SqlClient;
+using LinqToTyped;
+
+namespace Chapter18
+{
+   class LinqToTyped
+   {
+      static void Main(string[] args)
+      {
+         // connection string
+         string connString = @"
+            server = .\sqlexpress;
+            integrated security = true;
+            database = northwind
+         ";
+
+         // create connection
+         SqlConnection conn = new SqlConnection(connString);
+
+         // create dataset
+         TypedCustomers ds = new TypedCustomers();
+
+         // create data adapter
+         SqlDataAdapter da = new SqlDataAdapter(@"
+            select
+               *
+            from
+               customers
+            ",
+            conn
+         );
+ 
+         // fill data table
+         da.Fill(ds, "Customers");
+
+         // query data table
+         var custs =
+            from c in ds.Customers
+            where
+               c.Country == "USA"
+            select new {
+               c.CustomerID,
+               c.CompanyName
+            }
+         ;
+
+         ObjectDumper.Write(custs);
+      }
+   }
+}

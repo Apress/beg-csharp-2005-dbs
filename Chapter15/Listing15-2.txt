@@ -1,0 +1,11 @@
+      private void ConnStateChange(object sender, StateChangeEventArgs ev)
+      {
+         // Event handler for the StateChange Event
+         listBox1.Items.Add("------------------------------");
+         listBox1.Items.Add("Entering StateChange EventHandler");
+         listBox1.Items.Add("Sender = " + sender.ToString());
+         listBox1.Items.Add("Original State = " + ev.OriginalState.ToString());
+         listBox1.Items.Add("Current State = " + ev.CurrentState.ToString());
+         listBox1.Items.Add("Exiting StateChange EventHandler");
+         listBox1.Items.Add("------------------------------");
+      }

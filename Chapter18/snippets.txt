@@ -1,0 +1,21 @@
+            where
+               c.country == "USA"
+
+
+
+
+
+            orderby
+               c.city
+
+
+
+
+               c.city descending
+
+         ObjectDumper.Write(custs);
+
+
+
+
+   [Table(Name="Customers")]

@@ -1,0 +1,10 @@
+      private void ConnStateChange2(object sender, StateChangeEventArgs ev)
+      {
+         listBox1.Items.Add("------------------------------");
+         listBox1.Items.Add("Entering Second StateChange EventHandler");
+         listBox1.Items.Add("Sender = " + sender.ToString());
+         listBox1.Items.Add("Original State = " + ev.OriginalState.ToString());
+         listBox1.Items.Add("Current State = " + ev.CurrentState.ToString());
+         listBox1.Items.Add("Exiting Second StateChange EventHandler");
+         listBox1.Items.Add("------------------------------");
+      }

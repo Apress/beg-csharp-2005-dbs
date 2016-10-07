@@ -1,0 +1,46 @@
+         // create connection
+         SqlConnection conn = new SqlConnection(@"
+            data source = .\sqlexpress;
+            integrated security = true;
+            database = northwind
+         ");
+
+         // create command
+         SqlCommand cmd = new SqlCommand();
+         cmd.CommandText = @"
+            select top 1
+               customerid,
+               companyname
+            from
+               customers
+         ";
+         cmd.Connection = conn;
+
+         // delegate the StateChange event to the ConnStateChange function
+         conn.StateChange += new StateChangeEventHandler(ConnStateChange);
+
+         try
+         {
+            listBox1.Items.Clear();
+
+            // open connection - ConnStateChange event will be fired
+            conn.Open();
+
+            // create data reader
+            SqlDataReader dr = cmd.ExecuteReader();
+
+            // display rows in list box
+            while(dr.Read())
+            {
+               listBox1.Items.Add(dr.GetString(0) + "-" + dr.GetString(1));
+            }
+         }      
+         catch(SqlException e1)
+         {
+            MessageBox.Show (e1.Message);
+         }
+         finally
+         {
+            // close connection - ConnStateChange event will be fired
+            conn.Close();
+         }

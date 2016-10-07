@@ -1,0 +1,55 @@
+         // create connection
+         SqlConnection conn = new SqlConnection(@"
+            data source = .\sqlexpress;
+            integrated security = true;
+            database = northwind
+         ");
+
+         // delegate the InfoMessage event to the ConnInfoMessage method
+         conn.InfoMessage += new SqlInfoMessageEventHandler(ConnInfoMessage);
+
+         // delegate the StateChange event to the ConnStateChange function
+         conn.StateChange += new StateChangeEventHandler(ConnStateChange);
+
+         // create command
+         SqlCommand cmd = new SqlCommand();
+         cmd.CommandText = @"
+            select top 2
+               customerid
+            from customers
+         ";
+         cmd.Connection = conn;
+
+         try
+         {
+            // clear list box
+            listBox1.Items.Clear();
+
+            // open connection
+            conn.Open();
+
+            // create data reader
+            SqlDataReader rdr = cmd.ExecuteReader();
+
+            while(rdr.Read())
+            {
+               listBox1.Items.Add(rdr.GetString(0));
+            }
+
+            rdr.Close();
+
+            // execute a PRINT statement
+            cmd.CommandText = @"
+               print 'Get CustomerId for all customers'
+            ";
+            cmd.ExecuteNonQuery();
+         }
+         catch(SqlException ex)
+         {
+            MessageBox.Show (ex.Message);
+         }
+         finally
+         {
+            // close connection
+            conn.Close();
+         }
